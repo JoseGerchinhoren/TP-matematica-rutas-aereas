@@ -3,6 +3,9 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 
+# Establecer el modo wide como predeterminado
+st.set_page_config(layout="wide")
+
 # Definir las provincias de Argentina con sus coordenadas aproximadas
 provincias = {
     "Buenos Aires": (-34.6037, -58.3816),
