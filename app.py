@@ -8,13 +8,9 @@ aeropuertos = {
     "Ezeiza": (-34.8222, -58.5358),
     "Córdoba": (-31.3156, -64.2088),
     "Mendoza": (-32.8317, -68.7928),
-    "Tucumán": (-26.8400, -65.1042),
     "Salta": (-24.8560, -65.4862),
-    "Rosario": (-32.9036, -60.7854),
-    "Neuquén": (-38.9499, -68.1557),
-    "Bariloche": (-41.1512, -71.1579),
     "Ushuaia": (-54.8433, -68.2950),
-    "Comodoro Rivadavia": (-45.7859, -67.4655)
+    "Bariloche": (-41.1512, -71.1579)
 }
 
 # Crear un grafo
@@ -24,20 +20,12 @@ G = nx.Graph()
 G.add_nodes_from(aeropuertos.keys())
 
 # Añadir aristas (conexiones entre aeropuertos)
-# Añadir aristas (conexiones entre aeropuertos)
 conexiones = [
-    ("Ezeiza", "Córdoba"), ("Ezeiza", "Mendoza"), ("Ezeiza", "Tucumán"),
-    ("Ezeiza", "Salta"), ("Ezeiza", "Rosario"), ("Ezeiza", "Neuquén"),
-    ("Ezeiza", "Bariloche"), ("Ezeiza", "Ushuaia"), ("Ezeiza", "Comodoro Rivadavia"),
-    ("Córdoba", "Mendoza"), ("Córdoba", "Tucumán"), ("Córdoba", "Salta"),
-    ("Córdoba", "Rosario"), ("Córdoba", "Neuquén"), ("Córdoba", "Bariloche"),
-    ("Córdoba", "Ushuaia"), ("Córdoba", "Comodoro Rivadavia"),
-    ("Mendoza", "Tucumán"), ("Mendoza", "Salta"), ("Mendoza", "Neuquén"),
-    ("Salta", "Rosario"), ("Salta", "Neuquén"), ("Salta", "Bariloche"),
-    ("Rosario", "Neuquén"), ("Rosario", "Bariloche"), ("Rosario", "Ushuaia"),
-    ("Neuquén", "Bariloche"), ("Neuquén", "Ushuaia"), ("Neuquén", "Comodoro Rivadavia"),
-    ("Bariloche", "Ushuaia"), ("Bariloche", "Comodoro Rivadavia"),
-    ("Ushuaia", "Comodoro Rivadavia")
+    ("Ezeiza", "Córdoba"), ("Ezeiza", "Mendoza"), ("Ezeiza", "Salta"), ("Ezeiza", "Ushuaia"), ("Ezeiza", "Bariloche"),
+    ("Córdoba", "Mendoza"), ("Córdoba", "Salta"), ("Córdoba", "Ushuaia"), ("Córdoba", "Bariloche"),
+    ("Mendoza", "Salta"), ("Mendoza", "Ushuaia"), ("Mendoza", "Bariloche"),
+    ("Salta", "Ushuaia"), ("Salta", "Bariloche"),
+    ("Ushuaia", "Bariloche")
 ]
 
 G.add_edges_from(conexiones)
@@ -66,14 +54,14 @@ def draw_map(route=None):
     st.pyplot(plt)
 
 st.title('Rutas de Vuelo en Argentina')
-st.markdown('Selecciona el origen y el destino para ver la ruta de vuelo.')
+st.markdown('Selecciona el origen y el destino, en el sidebar, para ver la ruta de vuelo.')
 
-# Crear formularios de entrada
-origen = st.selectbox('Selecciona la provincia de origen:', aeropuertos.keys())
-destino = st.selectbox('Selecciona la provincia de destino:', aeropuertos.keys())
+# Crear formularios de entrada en el sidebar
+origen = st.sidebar.selectbox('Selecciona la provincia de origen:', aeropuertos.keys())
+destino = st.sidebar.selectbox('Selecciona la provincia de destino:', aeropuertos.keys())
 
-# Botón para calcular la ruta
-mostrar_ruta = st.button('Mostrar Ruta')
+# Botón para calcular la ruta en el sidebar
+mostrar_ruta = st.sidebar.button('Mostrar Ruta')
 
 if mostrar_ruta:
     if origen and destino:
