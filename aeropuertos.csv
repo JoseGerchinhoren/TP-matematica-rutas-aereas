@@ -1,0 +1,53 @@
+origen,destino,distancia,tiempo,costo
+Ezeiza,Córdoba,650,01:30,150
+Ezeiza,Mendoza,980,02:00,200
+Ezeiza,Tucumán,1070,02:00,180
+Ezeiza,Salta,1278,02:15,220
+Ezeiza,Rosario,287,01:00,120
+Ezeiza,Neuquén,996,02:00,200
+Ezeiza,Bariloche,1337,02:25,250
+Ezeiza,Ushuaia,2384,03:40,350
+Ezeiza,Comodoro Rivadavia,1465,02:35,230
+Córdoba,Ezeiza,650,01:30,150
+Córdoba,Mendoza,463,01:10,100
+Córdoba,Salta,732,01:20,130
+Córdoba,Neuquén,922,01:45,220
+Córdoba,Tucumán,507,01:05,115
+Córdoba,Comodoro Rivadavia,1633,02:35,235
+Córdoba,Bariloche,1258,02:15,220
+Córdoba,Ushuaia,2639,03:55,380
+Tucumán,Ezeiza,1070,02:00,180
+Tucumán,Mendoza,990,01:30,130
+Tucumán,Córdoba,507,01:05,115
+Mendoza,Ezeiza,980,02:00,200
+Mendoza,Córdoba,463,01:10,100
+Mendoza,Tucumán,990,01:30,130
+Mendoza,Rosario,748,01:25,100
+Mendoza,Neuquén,683,01:25,110
+Mendoza,Salta,945,01:40,170
+Mendoza,Bariloche,950,01:45,140
+Salta,Ezeiza,1278,02:15,220
+Salta,Córdoba,732,01:20,130
+Salta,Mendoza,945,01:40,170
+Salta,Neuquén,1589,02:35,210
+Salta,Rosario,1006,01:45,180
+Rosario,Ezeiza,287,01:00,120
+Rosario,Mendoza,748,01:25,100
+Rosario,Salta,1006,01:45,180
+Rosario,Neuquén,945,01:55,170
+Rosario,Bariloche,1300,02:15,200
+Neuquén,Ezeiza,996,02:00,200
+Neuquén,Córdoba,922,01:45,220
+Neuquén,Mendoza,683,01:25,110
+Neuquén,Salta,1589,02:35,210
+Neuquén,Rosario,945,01:55,170
+Neuquén,Comodoro Rivadavia,763,01:30,95
+Bariloche,Ezeiza,1337,02:25,250
+Bariloche,Córdoba,1258,02:15,220
+Bariloche,Mendoza,950,01:45,140
+Bariloche,Rosario,1300,02:15,200
+Ushuaia,Ezeiza,2384,03:40,350
+Ushuaia,Córdoba,2639,03:55,380
+Comodoro Rivadavia,Ezeiza,1465,02:35,230
+Comodoro Rivadavia,Córdoba,1633,02:35,235
+Comodoro Rivadavia,Neuquén,763,01:30,95
