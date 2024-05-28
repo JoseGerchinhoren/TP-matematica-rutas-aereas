@@ -61,6 +61,15 @@ def draw_map(route=None):
     plt.title("Mapa de Conexiones Aéreas entre Provincias de Argentina")
     st.pyplot(plt)
 
+def parse_time_to_minutes(time_str):
+    hours, minutes = map(int, time_str.split(':'))
+    return hours * 60 + minutes
+
+def format_minutes_to_hhmm(minutes):
+    hours = minutes // 60
+    mins = minutes % 60
+    return f"{hours:02d}:{mins:02d}"
+
 st.title('Rutas de Vuelo en Argentina')
 st.markdown('Selecciona el origen y el destino, en el sidebar, para ver la ruta de vuelo.')
 
@@ -78,27 +87,31 @@ if mostrar_ruta:
             st.success(f'Ruta encontrada: {" -> ".join(ruta)}')
             # Generar las aristas de la ruta
             edges = [(ruta[n], ruta[n+1]) for n in range(len(ruta)-1)]
-            # Calcular costo y distancia total
+            # Calcular costo, distancia y tiempo total
             costo_total = 0
             distancia_total = 0
+            tiempo_total = 0
             
             st.markdown("### Detalles del viaje:")
             for u, v in edges:
                 costo = G[u][v]['costo'] * 1000
                 distancia = G[u][v]['distancia']
-                st.info(f'**De {u} a {v}:** Costo ${costo}, Distancia {distancia} km')
+                tiempo = parse_time_to_minutes(G[u][v]['tiempo'])
+                st.info(f'**De {u} a {v}:** Costo ${costo}, Distancia {distancia} km, Tiempo {format_minutes_to_hhmm(tiempo)}')
                 costo_total += costo
                 distancia_total += distancia
+                tiempo_total += tiempo
 
-            # Mostrar costo y distancia total solo si hay escalas
+            # Mostrar costo, distancia y tiempo total solo si hay escalas
             if len(ruta) > 2:
                 st.markdown("### Totales del viaje:")
                 st.info(f'**Costo Total:** ${costo_total}')
                 st.info(f'**Distancia Total:** {distancia_total} km')
+                st.info(f'**Tiempo Total:** {format_minutes_to_hhmm(tiempo_total)}')
             draw_map(route=edges)
             
         except nx.NetworkXNoPath:
-            st.error('No existe una ruta entre las aeropuertos seleccionadas.')
+            st.error('No existe una ruta entre los aeropuertos seleccionados.')
     else:
         st.error('Por favor, selecciona tanto el origen como el destino.')
 else:
