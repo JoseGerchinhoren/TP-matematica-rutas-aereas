@@ -3,6 +3,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
 import pandas as pd
+from matplotlib.patches import FancyArrowPatch
 
 # Cargar el archivo CSV
 data = pd.read_csv('aeropuertos.csv')
@@ -31,12 +32,21 @@ G.add_nodes_from(aeropuertos.keys())
 for index, row in data.iterrows():
     G.add_edge(row['origen'], row['destino'], distancia=row['distancia'], tiempo=row['tiempo'], costo=row['costo'])
 
-# Función para calcular el peso basado en costo y distancia
+# Función para calcular el peso basado en costo, distancia y tiempo
 def peso(u, v, d):
     costo = d['costo']
     distancia = d['distancia']
-    # Se da más peso al costo, normalizando y combinando con la distancia
-    return costo * 1000 + distancia
+    tiempo = parse_time_to_minutes(d['tiempo'])  # Convertir tiempo a minutos
+    
+    # Normalizar cada valor: costo, distancia y tiempo
+    # Puedes ajustar los factores de normalización según la importancia relativa de cada componente
+    costo_normalizado = costo * 1000
+    distancia_normalizada = distancia
+    tiempo_normalizado = tiempo
+
+    # Combinamos costo, distancia y tiempo
+    # Asignando pesos relativos a cada componente
+    return costo_normalizado + distancia_normalizada + tiempo_normalizado
 
 def draw_map(route=None):
     plt.figure(figsize=(10, 10))
@@ -52,11 +62,22 @@ def draw_map(route=None):
 
     # Dibujar el grafo sobre el mapa
     nx.draw_networkx_nodes(G, pos, node_size=100, node_color='yellow')
-    nx.draw_networkx_edges(G, pos, edgelist=G.edges(), edge_color='blue')
     nx.draw_networkx_labels(G, pos, font_size=10, font_family='sans-serif', font_color='black')
 
+    # Dibujar todas las conexiones con líneas azules
+    for edge in G.edges():
+        u, v = edge
+        x1, y1 = pos[u]
+        x2, y2 = pos[v]
+        plt.plot([x1, x2], [y1, y2], color='blue', alpha=0.5)
+
+    # Dibujar la ruta seleccionada con flechas rojas más gruesas
     if route:
-        nx.draw_networkx_edges(G, pos, edgelist=route, edge_color='red', width=2.0)
+        for u, v in route:
+            x1, y1 = pos[u]
+            x2, y2 = pos[v]
+            arrow = FancyArrowPatch((x1, y1), (x2, y2), color='red', arrowstyle='-|>', mutation_scale=20, linewidth=2)
+            plt.gca().add_patch(arrow)
 
     plt.title("Mapa de Conexiones Aéreas entre Provincias de Argentina")
     st.pyplot(plt)
